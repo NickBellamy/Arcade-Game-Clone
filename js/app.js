@@ -1,3 +1,18 @@
+const scorer = {
+    score: 0,
+    incrementScore: function() {
+        this.score++;
+        this.showScore();
+    },
+    resetScore: function() {
+        this.score = 0;
+        this.showScore();
+    },
+    showScore: function() {
+        document.querySelector('h2 span').innerHTML = this.score;
+    }
+}
+
 // Enemies our player must avoid
 class Enemy {
     constructor () {
@@ -22,6 +37,7 @@ class Enemy {
         if(this.x + 50 >= player.x && this.x -100 < player.x && this.y > player.y && this.y -80 < player.y) {
             this.respawn();
             player.respawn();
+            scorer.resetScore();
         }
     }
     // Draw the enemy on the screen, required method for game
@@ -63,7 +79,8 @@ class Player {
                 if (this.y > (0 * 84) + 40) {
                     this.y -= 84;
                 } else {
-                    this.y = (4* 84) + 40;
+                    scorer.incrementScore();
+                    this.respawn();
                 }
                 break;
             case 'down' :
