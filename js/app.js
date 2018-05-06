@@ -4,8 +4,7 @@ class Enemy {
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
-        // TODO: Make speed random
-        this.speed = 10;
+        this.speed = (Math.random() * 400) + 200;
         // TODO: Check spawn locations
         this.x = 0;
         // TODO: Check spawn locations
@@ -50,6 +49,8 @@ class Player {
             case 'up' :
                 if (this.y > (0 * 84) + 40) {
                     this.y -= 84;
+                } else {
+                    this.y = (4* 84) + 40;
                 }
                 break;
             case 'down' :
