@@ -32,8 +32,8 @@ class Enemy {
 class Player {
     constructor() {
         this.sprite = 'images/char-boy.png';
-        this.x = 0;
-        this.y = 0;
+        this.x = 200;
+        this.y = (4*84) + 40;
     }
     update(dt) {
         // You should multiply any movement by the dt parameter
