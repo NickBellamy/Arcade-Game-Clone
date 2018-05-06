@@ -1,19 +1,21 @@
 // Enemies our player must avoid
 class Enemy {
-    constructor (lane) {
+    constructor () {
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
         this.speed = (Math.random() * 400) + 200;
         this.x = -200;
-        this.y = 60 + (84 * lane);
+        this.y = 60 + (84 * Math.floor(Math.random() * 3));
     }
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += this.speed * dt;
-
+        if (this.x >= 500) {
+            this.respawn();
+        }
     }
     collisionHandler() {
 
@@ -21,6 +23,11 @@ class Enemy {
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    respawn() {
+        this.x = -200;
+        this.y = 60 + (84 * Math.floor(Math.random() * 3));
+        this.speed = (Math.random() * 400) + 200;
     }
 }
 
@@ -72,7 +79,7 @@ class Player {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-const allEnemies = [new Enemy(0), new Enemy(1), new Enemy(2)];
+const allEnemies = [new Enemy(), new Enemy(), new Enemy()];
 // Place the player object in a variable called player
 const player = new Player();
 
