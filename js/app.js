@@ -13,6 +13,12 @@ const scorer = {
     }
 }
 
+const gridSize = (() => {
+    const height = 84;
+    const width = 101;
+    return () => ({ y: height, x: width });
+})();
+
 // Enemies our player must avoid
 class Enemy {
     constructor () {
@@ -21,7 +27,7 @@ class Enemy {
         this.sprite = 'images/enemy-bug.png';
         this.speed = (Math.random() * 400) + 200;
         this.x = -200;
-        this.y = 60 + (84 * Math.floor(Math.random() * 3));
+        this.y = 60 + (gridSize().y * Math.floor(Math.random() * 3));
     }
     update(dt) {
         // You should multiply any movement by the dt parameter
@@ -34,7 +40,7 @@ class Enemy {
         this.collisionHandler();
     }
     collisionHandler() {
-        if(this.x + 50 >= player.x && this.x -100 < player.x && this.y > player.y && this.y -80 < player.y) {
+        if(this.x + 50 >= player.x && this.x - gridSize().x < player.x && this.y > player.y && this.y - gridSize().y < player.y) {
             this.respawn();
             player.respawn();
             scorer.resetScore();
@@ -46,7 +52,7 @@ class Enemy {
     }
     respawn() {
         this.x = -200;
-        this.y = 60 + (84 * Math.floor(Math.random() * 3));
+        this.y = 60 + (gridSize().y * Math.floor(Math.random() * 3));
         this.speed = (Math.random() * 400) + 200;
     }
 }
@@ -58,7 +64,7 @@ class Player {
     constructor() {
         this.sprite = 'images/char-boy.png';
         this.x = 200;
-        this.y = (4 * 84) + 40;
+        this.y = (4 * gridSize().y) + 40;
     }
     update(dt) {
         // You should multiply any movement by the dt parameter
@@ -76,26 +82,26 @@ class Player {
     handleInput(key) {
         switch (key) {
             case 'up' :
-                if (this.y > (0 * 84) + 40) {
-                    this.y -= 84;
+                if (this.y > (0 * gridSize().y) + 40) {
+                    this.y -= gridSize().y;
                 } else {
                     scorer.incrementScore();
                     this.respawn();
                 }
                 break;
             case 'down' :
-                if (this.y < (4 * 84) + 40) {
-                    this.y += 84;
+                if (this.y < (4 * gridSize().y) + 40) {
+                    this.y += gridSize().y;
                 }
                 break;
             case 'left' :
-                if (this.x > (2 * 101) - 200) {
-                    this.x -= 101;
+                if (this.x > (2 * gridSize().x) - 200) {
+                    this.x -= gridSize().x;
                 }
                 break;
             case 'right' :
-            if (this.x < (2 * 101) + 200) {
-                this.x += 101;
+            if (this.x < (2 * gridSize().x) + 200) {
+                this.x += gridSize().x;
             }
         }
     }
