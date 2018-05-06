@@ -1,6 +1,6 @@
 // Enemies our player must avoid
 class Enemy {
-    constructor () {
+    constructor (lane) {
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
@@ -9,7 +9,7 @@ class Enemy {
         // TODO: Check spawn locations
         this.x = 0;
         // TODO: Check spawn locations
-        this.y = 0;
+        this.y = 60 + (84 * lane);
     }
     update(dt) {
         // You should multiply any movement by the dt parameter
@@ -65,7 +65,7 @@ class Player {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-const allEnemies = [new Enemy(), new Enemy()];
+const allEnemies = [new Enemy(0), new Enemy(1), new Enemy(2)];
 // Place the player object in a variable called player
 const player = new Player();
 
