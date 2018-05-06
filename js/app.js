@@ -46,7 +46,19 @@ class Player {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
     handleInput(key) {
-
+        switch (key) {
+            case 'up' :
+                this.y -= 84;
+                break;
+            case 'down' :
+                this.y += 84;
+                break;
+            case 'left' :
+                this.x -= 101;
+                break;
+            case 'right' :
+                this. x += 101;
+        }
     }
 }
 
