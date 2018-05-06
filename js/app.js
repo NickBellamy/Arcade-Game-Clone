@@ -18,7 +18,6 @@ class Enemy {
         }
     }
     collisionHandler() {
-
     }
     // Draw the enemy on the screen, required method for game
     render() {
@@ -48,6 +47,10 @@ class Player {
     // Draw the player on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    respawn() {
+        this.x = 200;
+        this.y = (4 * 84) + 40;
     }
     handleInput(key) {
         switch (key) {
