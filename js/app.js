@@ -16,8 +16,13 @@ class Enemy {
         if (this.x >= 500) {
             this.respawn();
         }
+        this.collisionHandler();
     }
     collisionHandler() {
+        if(this.x + 50 >= player.x && this.x -100 < player.x && this.y > player.y && this.y -80 < player.y) {
+            this.respawn();
+            player.respawn();
+        }
     }
     // Draw the enemy on the screen, required method for game
     render() {
