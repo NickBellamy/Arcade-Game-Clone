@@ -5,9 +5,7 @@ class Enemy {
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
         this.speed = (Math.random() * 400) + 200;
-        // TODO: Check spawn locations
-        this.x = 0;
-        // TODO: Check spawn locations
+        this.x = -200;
         this.y = 60 + (84 * lane);
     }
     update(dt) {
