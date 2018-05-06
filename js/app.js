@@ -34,7 +34,7 @@ class Player {
     constructor() {
         this.sprite = 'images/char-boy.png';
         this.x = 200;
-        this.y = (4*84) + 40;
+        this.y = (4 * 84) + 40;
     }
     update(dt) {
         // You should multiply any movement by the dt parameter
@@ -48,16 +48,24 @@ class Player {
     handleInput(key) {
         switch (key) {
             case 'up' :
-                this.y -= 84;
+                if (this.y > (0 * 84) + 40) {
+                    this.y -= 84;
+                }
                 break;
             case 'down' :
-                this.y += 84;
+                if (this.y < (4 * 84) + 40) {
+                    this.y += 84;
+                }
                 break;
             case 'left' :
-                this.x -= 101;
+                if (this.x > (2 * 101) - 200) {
+                    this.x -= 101;
+                }
                 break;
             case 'right' :
-                this. x += 101;
+            if (this.x < (2 * 101) + 200) {
+                this.x += 101;
+            }
         }
     }
 }
