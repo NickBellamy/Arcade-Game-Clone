@@ -10,7 +10,7 @@ const scoreKeeper = {
     }
 }
 
-// Stipulates the size of a tile to aid movement calculations
+// Stipulates the size of a tile to aid movement
 const tileSize = { y: 84, x: 101 };
 
 /* Character Class */
@@ -42,7 +42,7 @@ class Enemy extends Character {
     collisionHandler() {
         if (this.x + (0.5 * tileSize.x) >= player.x && this.x - tileSize.x < player.x && this.y > player.y && this.y - tileSize.y < player.y) {
             this.respawn();
-            player.respawn(Player.spawnLocation());
+            player.respawn(Player.spawnLocation(), Player.image().offset);
             scoreKeeper.resetScore();
         }
     }
@@ -109,7 +109,6 @@ class Player extends Character {
                     this.x += tileSize.x;
                 }
         }
-        console.log(this.x + ', ' + this.y);
     }
     static image() {
         return {
