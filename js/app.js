@@ -1,31 +1,34 @@
 // Handles the scoring of the game
 const scoreKeeper = {
     score: 0,
-    incrementScore: function() {
+    incrementScore: function () {
         document.querySelector('h2 span').innerHTML = ++this.score;
     },
-    resetScore: function() {
+    resetScore: function () {
         this.score = 0;
         document.querySelector('h2 span').innerHTML = this.score;
     }
 }
 
 // Stipulates the size of a tile to aid movement
-const tileSize = { y: 84, x: 101 };
+const tileSize = {x: 101, y: 84};
 
 /* Character Class */
 
 class Character {
     constructor(spawnLocation, image) {
-        this.sprite = image.location;
-        this.respawn(spawnLocation, image.offset);
+        this.img = image;
+        this.respawn(spawnLocation);
     }
-    respawn(spawnLocation, offset) {
-        this.x = (spawnLocation.x * tileSize.x) + offset.x;
-        this.y = (spawnLocation.y * tileSize.y) + offset.y;
+    respawn(spawnLocation) {
+        this.x = (spawnLocation.x * tileSize.x);
+        this.y = (spawnLocation.y * tileSize.y);
+    }
+    get charLocation() {
+        return `${Math.floor(this.x / tileSize.x)}:${Math.floor(this.y / tileSize.y)}`;
     }
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.drawImage(Resources.get(this.img.location), this.x + this.img.offset.x, this.y + this.img.offset.y);
     }
     update(dt) {
         // update() is needed in engine.js even if not defined
@@ -36,43 +39,37 @@ class Character {
 
 class Enemy extends Character {
     constructor() {
-        super(Enemy.spawnLocation(), Enemy.image());
-        this.speed = Enemy.speed();
+        super(Enemy.spawnLocation, Enemy.image);
+        this.speed = Enemy.speed;
     }
     collisionHandler() {
-        if (this.x + (0.5 * tileSize.x) >= player.x && this.x - tileSize.x < player.x && this.y > player.y && this.y - tileSize.y < player.y) {
+        if (this.charLocation === player.charLocation) {
             this.respawn();
-            player.respawn(Player.spawnLocation(), Player.image().offset);
+            player.respawn(Player.spawnLocation);
             scoreKeeper.resetScore();
         }
     }
     respawn() {
-        super.respawn(Enemy.spawnLocation(), Enemy.image().offset);
-        this.speed = Enemy.speed();
+        super.respawn(Enemy.spawnLocation);
+        this.speed = Enemy.speed;
     }
     update(dt) {
         this.x += this.speed * dt;
-        if (this.x >= 5 * tileSize.x) {
+        if (this.x >= (5 * tileSize.x) - Enemy.image.offset.x) {
             this.respawn();
         }
         this.collisionHandler();
     }
-    static image() {
+    static get image() {
         return {
             location: 'images/enemy-bug.png',
-            offset: {
-                x: 0,
-                y: 60
-            }
-        }
+            offset: {x: -50, y: 60}
+        };
     }
-    static spawnLocation() {
-        return {
-            x: -1, 
-            y: Math.floor(Math.random() * 3)
-        }
+    static get spawnLocation() {
+        return {x: -1, y: Math.floor(Math.random() * 3)};
     }
-    static speed() {
+    static get speed() {
         return (Math.random() * 400) + 200;
     }
 }
@@ -81,49 +78,43 @@ class Enemy extends Character {
 
 class Player extends Character {
     constructor() {
-        super(Player.spawnLocation(), Player.image());
+        super(Player.spawnLocation, Player.image);
     }
     // Move the player on screen
     handleInput(key) {
         switch (key) {
-            case 'up' :
-                if (this.y >= (1 * tileSize.y) + Player.image().offset.y) {
+            case 'up':
+                if (this.y >= tileSize.y) {
                     this.y -= tileSize.y;
                 } else {
                     scoreKeeper.incrementScore();
-                    super.respawn(Player.spawnLocation(), Player.image().offset);
+                    super.respawn(Player.spawnLocation);
                 }
                 break;
-            case 'down' :
-                if (this.y <= (3 * tileSize.y) + Player.image().offset.y) {
+            case 'down':
+                if (this.y <= (3 * tileSize.y)) {
                     this.y += tileSize.y;
                 }
                 break;
-            case 'left' :
-                if (this.x >= (1 * tileSize.x) + Player.image().offset.x) {
+            case 'left':
+                if (this.x >= tileSize.x) {
                     this.x -= tileSize.x;
                 }
                 break;
-            case 'right' :
-                if (this.x <= (3 * tileSize.x) + Player.image().offset.x) {
+            case 'right':
+                if (this.x <= (3 * tileSize.x)) {
                     this.x += tileSize.x;
                 }
         }
     }
-    static image() {
+    static get image() {
         return {
             location: 'images/char-boy.png',
-            offset: {
-                x: 0,
-                y: 40
-            }
-        }
+            offset: {x: 0, y: 40}
+        };
     }
-    static spawnLocation() {
-        return {
-            x: 2,
-            y: 4
-        }
+    static get spawnLocation() {
+        return {x: 2, y: 4};
     }
 }
 
@@ -134,7 +125,7 @@ const allEnemies = [...Array(3)].map(() => new Enemy());
 const player = new Player();
 
 // Valid key event listener and handler
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     const allowedKeys = {
         37: 'left',
         38: 'up',
