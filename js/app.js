@@ -10,7 +10,7 @@ const scoreKeeper = {
     }
 }
 
-// Stipulates the size of a tile to aid movement
+// Helper object for position calculations
 const tileSize = {x: 101, y: 84};
 
 /* Character Class */
@@ -20,18 +20,20 @@ class Character {
         this.img = image;
         this.respawn(spawnLocation);
     }
+    // Respawns the character at a given location
     respawn(spawnLocation) {
         this.x = (spawnLocation.x * tileSize.x);
         this.y = (spawnLocation.y * tileSize.y);
     }
+    // Returns a string to easily compare locations for collision detection
     get charLocation() {
         return `${Math.floor(this.x / tileSize.x)}:${Math.floor(this.y / tileSize.y)}`;
     }
     render() {
         ctx.drawImage(Resources.get(this.img.location), this.x + this.img.offset.x, this.y + this.img.offset.y);
     }
+    // update() is needed in engine.js even if not defined
     update(dt) {
-        // update() is needed in engine.js even if not defined
     }
 }
 
@@ -42,6 +44,7 @@ class Enemy extends Character {
         super(Enemy.spawnLocation, Enemy.image);
         this.speed = Enemy.speed;
     }
+    // Handles a collision and resets the game if necessary
     collisionHandler() {
         if (this.charLocation === player.charLocation) {
             this.respawn();
@@ -49,12 +52,15 @@ class Enemy extends Character {
             scoreKeeper.resetScore();
         }
     }
+    // Respawns the enemy and assigns a new random speed
     respawn() {
         super.respawn(Enemy.spawnLocation);
         this.speed = Enemy.speed;
     }
+    // Moves the enemy and checks for collisions with player
     update(dt) {
         this.x += this.speed * dt;
+        // If enemy has moved off screen, then respawn
         if (this.x >= (5 * tileSize.x) - Enemy.image.offset.x) {
             this.respawn();
         }
@@ -80,7 +86,7 @@ class Player extends Character {
     constructor() {
         super(Player.spawnLocation, Player.image);
     }
-    // Move the player on screen
+    // Player input handler
     handleInput(key) {
         switch (key) {
             case 'up':
@@ -105,6 +111,7 @@ class Player extends Character {
                 if (this.x <= (3 * tileSize.x)) {
                     this.x += tileSize.x;
                 }
+            // No default as we only want the above cases handled
         }
     }
     static get image() {
