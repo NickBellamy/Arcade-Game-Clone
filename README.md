@@ -1,6 +1,24 @@
-frontend-nanodegree-arcade-game
-===============================
+# Arcade Game Clone
+A simple web based clone of the classic Frogger arcade game.  The aim of the game is to get to the far side of the board as many times as possible before dying.  This project is part of the Udacity Nanodegree program, and all code outside of the app.js file was provided as a template for this project.
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+**The following criteria must be met:**
+
+* The game functions correctly and runs error free
+* Player can not move off screen
+* Vehicles cross the screen
+* Vehicle-player collisions happen logically (not too early or too late)
+* Vehicle-player collision resets the game
+* Something happens when player wins
+* Game objects (player and vehicles) are implemented using JavaScript object-oriented programming features
+* A `README` file is included detailing all steps required to successfully run the application
+* Comments are present and effectively explain longer code procedures. As a rule of thumb: describe what all custom functions and object methods do
+* Code is formatted with consistent, logical, and easy-to-read formatting as described in the [Udacity JavaScript Style Guide](https://udacity.github.io/frontend-nanodegree-styleguide/javascript.html)
+
+## Technologies used
+
+The entire project has been written using HTML, CSS, and pure JavaScript.
+
+## Playing the game
+
+Use the `Up`, `Down`, `Left` and `Right` keyboard keys to move your player around the game board.  Every time you get to the far side of the screen, you will gain a point.  Watch out for the cockroaches - every time you get hit by one, the game resets!
