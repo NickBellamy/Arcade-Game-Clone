@@ -1,14 +1,16 @@
 // Handles the scoring of the game
-const scoreKeeper = {
-    score: 0,
-    incrementScore: function () {
-        document.querySelector('h2 span').innerHTML = ++this.score;
-    },
-    resetScore: function () {
-        this.score = 0;
-        document.querySelector('h2 span').innerHTML = this.score;
+const scoreKeeper = (() => {
+    let score = 0;
+    const incrementScore = () => document.querySelector('h2 span').innerHTML = ++score;
+    const resetScore = () => {
+        score = 0;
+        document.querySelector('h2 span').innerHTML = score;
     }
-}
+    return {
+        incrementScore: incrementScore, 
+        resetScore: resetScore
+    };
+})();
 
 // Helper object for position calculations
 const tileSize = {x: 101, y: 84};
