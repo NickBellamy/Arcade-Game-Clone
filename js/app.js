@@ -43,14 +43,6 @@ class Enemy extends Character {
         super(Enemy.spawnLocation, Enemy.image);
         this.speed = Enemy.speed;
     }
-    // Handles a collision and resets the game if necessary
-    collisionHandler() {
-        if (this.charLocation === player.charLocation) {
-            this.respawn();
-            player.respawn(Player.spawnLocation);
-            scoreKeeper.resetScore();
-        }
-    }
     // Respawns the enemy and assigns a new random speed
     respawn() {
         super.respawn(Enemy.spawnLocation);
@@ -63,7 +55,6 @@ class Enemy extends Character {
         if (this.x >= (5 * tileSize.x) - Enemy.image.offset.x) {
             this.respawn();
         }
-        this.collisionHandler();
     }
     static get image() {
         return {

@@ -79,9 +79,16 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
     }
 
+    // Handles a collision and resets the game if necessary
+    function checkCollisions(enemy) {
+        if (enemy.charLocation === player.charLocation) {
+            enemy.respawn();
+            player.respawn(Player.spawnLocation);
+            scoreKeeper.resetScore();
+        }
+    }
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -92,6 +99,7 @@ var Engine = (function(global) {
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
+            checkCollisions(enemy);
         });
     }
 
