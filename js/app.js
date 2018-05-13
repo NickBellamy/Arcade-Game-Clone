@@ -34,9 +34,6 @@ class Character {
     render() {
         ctx.drawImage(Resources.get(this.img.location), this.x + this.img.offset.x, this.y + this.img.offset.y);
     }
-    // update() is needed in engine.js even if not defined
-    update(dt) {
-    }
 }
 
 /* Enemy Class */
